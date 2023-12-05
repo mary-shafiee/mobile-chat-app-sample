@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
-import { CiPill } from "react-icons/ci";
-
+import logo from './assets/logo.png'
+import avatar from './assets/avatar.png'
 import './App.css'
 import Header from './components/Header'
 import { Avatar, Card, CardBody, CardFooter, CardHeader, ScrollShadow } from '@nextui-org/react'
@@ -16,6 +16,7 @@ interface MessagesType {
 } 
 
 function App() {
+
   const [message, setMessage] = useState<string>();
   const [typing , setTyping] = useState(false)
   const [messages, setMessages] = useState<MessagesType[]>([
@@ -106,6 +107,7 @@ function App() {
   ])
 
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
+ 
 
   useEffect(() => {
     if (lastMessageRef.current) {
@@ -113,6 +115,9 @@ function App() {
     }
   }, [messages]);
 
+  
+ 
+  
 
 //  const processMessagesToChatGPT = async(chatMessages :MessagesType[]) => {
 //   chatMessages.map((messageObject : MessagesType)=> {
@@ -170,10 +175,11 @@ function App() {
       </CardHeader>
       <ScrollShadow hideScrollBar >
       <CardBody className=' bg-stone-950 grow w-screen flex flex-col p-1'>
+      
       {messages.map((message , index) => (
         message.sender === 'ChatGPT' ? 
           <div className='flex gap-2 items-center pl-2' key={index} ref={index === messages.length - 1 ? lastMessageRef : null}>
-             <Avatar  className="w-6 h-6 text-tiny" fallback={<CiPill size={'20px'}/>} />
+             <Avatar  className="w-6 h-6 text-tiny"  src={logo} />
              <article key={index} className=" message-enter p-1 text-gray-200 my-2 rounded-lg bg-stone-950 max-w-[300px]">
                {message.message}
              </article>
@@ -181,13 +187,14 @@ function App() {
           
           : 
           <div className='flex gap-2 items-center pl-2' key={index}  ref={index === messages.length - 1 ? lastMessageRef : null}>
-          <Avatar showFallback src='https://images.unsplash.com/broken'  className="w-6 h-6 text-tiny"  />
+          <Avatar showFallback src={avatar}  className="w-6 h-6 text-tiny"  />
           <article  className="message-enter p-1 text-gray-200 my-2 rounded-lg bg-stone-950 max-w-[300px]">
             {message.message}
           </article>
        </div>
         
         ))}
+          
       </CardBody>
       </ScrollShadow>
         {typing && (
@@ -195,6 +202,7 @@ function App() {
              <TypingIndicator />
           </div>
           )}
+          
       <CardFooter className='h-20   bg-stone-950  w-full ' >
           <MessageInputContainer message={message}
         onMessageChange={handleInputChange}
