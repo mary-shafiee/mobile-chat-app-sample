@@ -2,3 +2,58 @@
   box-sizing: border-box;
   
 }
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.message-enter {
+  animation: slideIn 0.3s ease;
+}
+
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 0.6s infinite;
+}
+
+.animate-bounce200 {
+  animation: bounce 0.6s infinite;
+  animation-delay: 0.2s;
+}
+
+.animate-bounce400 {
+  animation: bounce 0.6s infinite;
+  animation-delay: 0.4s;
+}
+
+.typing-indicator-container {
+  position: fixed; /* Position fixed to keep it in the middle */
+  top: 50%; /* Center vertically */
+  left: 45%; /* Center horizontally */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* transform: translate(-50%, -50%) perspective(600px) rotateX(35deg) rotateY(0deg) rotateZ(45deg);  */
+  /* 3D effect and centering */
+}
+
+.animate-bounce {
+  animation: bounce 0.6s infinite;
+  /* Rest of your animation styles */
+}

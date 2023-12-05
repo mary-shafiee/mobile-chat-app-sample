@@ -3,45 +3,31 @@ import { ChangeEvent, FormEvent } from "react";
 import { FaArrowUp } from "react-icons/fa6";
 
 interface MessageInputProps {
-    message: string,
+    message: string | undefined,
     onMessageChange: (e: ChangeEvent<HTMLInputElement>) => void,
     onMessageSubmit: (e: FormEvent) => void,
+    istyping : boolean
   
   }
-// interface messageType {
-//     message : string ,
-//     role : string ,
-//     id : number
-// }
 
-const MessageInputContainer = ({ message, onMessageChange, onMessageSubmit  }  : MessageInputProps) => {
+
+const MessageInputContainer = ({ message, onMessageChange, onMessageSubmit  ,istyping}  : MessageInputProps) => {
   
-    // const [inputValue, setInputValue] = useState<string>(message);
-    
-    // const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-      
-    //     setInputValue(e.target.value);
+  
         
 
-    //   };
 
- 
-
-    //   const handleSubmit = (e: FormEvent) => {
-    //     e.preventDefault();
-    //     sendMessage(inputValue);
-    //     setInputValue('');
-    //   };
 
   return (
     
         <form className="flex flex-row w-screen gap-2 items-center justify-center bg-trasparent" onSubmit={onMessageSubmit}>
 
         <Textarea
+            readOnly={istyping}
             value={message}
             onChange={onMessageChange}
             className="  text-base border-none rounded-full h-10 w-10/12 overflow-hidden "
-                placeholder="message"
+                placeholder={istyping ? 'waiting' : 'message'}
             rows={1}
       
 />

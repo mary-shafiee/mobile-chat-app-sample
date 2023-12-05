@@ -1,10 +1,11 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import { CiPill } from "react-icons/ci";
 
 import './App.css'
 import Header from './components/Header'
-import { Avatar, Card, CardBody, CardFooter, CardHeader, User } from '@nextui-org/react'
+import { Avatar, Card, CardBody, CardFooter, CardHeader, ScrollShadow } from '@nextui-org/react'
 import MessageInputContainer from './components/MessageInputContainer'
+import TypingIndicator from './components/TypingIndicator';
 
 
 interface MessagesType {
@@ -24,8 +25,93 @@ function App() {
       setTime : 'just now',
       id:1
       
-    }
+    },
+    {
+      message : "Hi I'm Here To Help You ",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
+    {
+      message : "Hi I'm Here To Help You ",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
+    {
+      message : "Hi I'm Here To Help You ",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
+    {
+      message : "Hi I'm Here To Help You ",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
+    {
+      message : "Hi I'm Here To Help You ",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
+    {
+      message : "Hi I'm Here To Help You ",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
+    {
+      message : "Hi I'm Here To Help You ",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
+    {
+      message : "Hi I'm Here To Help You ",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
+    {
+      message : "Hi I'm Here To Help You dcfberugnfjkdvn reugnvdjkvn reugndjkfvn nmfvhwlefijw;qfkcmledvhngjfkdcvn dfjghirdjkvn jcxdvbug",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
+    {
+      message : "Hi I'm Here To Help You dcfberugnfjkdvn reugnvdjkvn reugndjkfvn nmfvhwlefijw;qfkcmledvhngjfkdcvn dfjghirdjkvn jcxdvbug",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
+    {
+      message : "Hi I'm Here To Help You dcfberugnfjkdvn reugnvdjkvn reugndjkfvn nmfvhwlefijw;qfkcmledvhngjfkdcvn dfjghirdjkvn jcxdvbug",
+      sender : "ChatGPT",
+      setTime : 'just now',
+      id:1
+      
+    },
   ])
+
+  const lastMessageRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
 
 //  const processMessagesToChatGPT = async(chatMessages :MessagesType[]) => {
@@ -46,20 +132,33 @@ function App() {
   const handleMessageSubmit = (e: FormEvent) => {
     e.preventDefault();
     console.log("Message to send:", message);
-    if(!message) return null
+    if(!message) return ;
     // Add logic to handle the message (e.g., sending to a server)
     const newMessage : MessagesType ={
       message : message ,
       sender : 'user',
       
-     }
-     const newMessages = [...messages , newMessage] // all old messages + the new one
-     setMessages(newMessages)
+    }
+    const newMessages = [...messages , newMessage] // all old messages + the new one
+    setMessages(newMessages)
+    setMessage(''); // Optionally reset the message after sending
 
      //set a typing indicator 
      setTyping(true)
-     setInterval(()=>setTyping(false) , 3000)
-    setMessage(''); // Optionally reset the message after sending
+
+     // Simulate a delay for receiving a response
+  setTimeout(() => {
+    setTyping(false); // Stop typing indicator
+
+    // Add a fake response
+    const fakeResponse: MessagesType = {
+      message: "This is a fake response",
+      sender: "ChatGPT",
+      setTime: 'just now',
+      id: messages.length + 2 // Adjust the ID appropriately
+    };
+    setMessages(prevMessages => [...prevMessages, fakeResponse]);
+  }, 5000); // Adjust the delay as needed
     // processMessagesToChatGPT(newMessages)
 
   };
@@ -69,30 +168,37 @@ function App() {
       <CardHeader className='h-12'>
         <Header/>
       </CardHeader>
+      <ScrollShadow hideScrollBar >
       <CardBody className=' bg-stone-950 grow w-screen flex flex-col p-1'>
       {messages.map((message , index) => (
         message.sender === 'ChatGPT' ? 
-          <div className='flex gap-2 items-center pl-2' key={index}>
+          <div className='flex gap-2 items-center pl-2' key={index} ref={index === messages.length - 1 ? lastMessageRef : null}>
              <Avatar  className="w-6 h-6 text-tiny" fallback={<CiPill size={'20px'}/>} />
-             <div key={index} className="p-1 text-gray-200 my-2 rounded-lg bg-stone-950">
+             <article key={index} className=" message-enter p-1 text-gray-200 my-2 rounded-lg bg-stone-950 max-w-[300px]">
                {message.message}
-             </div>
+             </article>
           </div>
           
           : 
-          <div className='flex gap-2 items-center pl-2' key={index}>
+          <div className='flex gap-2 items-center pl-2' key={index}  ref={index === messages.length - 1 ? lastMessageRef : null}>
           <Avatar showFallback src='https://images.unsplash.com/broken'  className="w-6 h-6 text-tiny"  />
-          <div  className="p-1 text-gray-200 my-2 rounded-lg bg-stone-950">
+          <article  className="message-enter p-1 text-gray-200 my-2 rounded-lg bg-stone-950 max-w-[300px]">
             {message.message}
-          </div>
+          </article>
        </div>
         
         ))}
       </CardBody>
-      <CardFooter className='h-12   overflow-hidden  absolute before:rounded-xl rounded-large bottom-3 w-[calc(100%_-_8px)] shadow-md  ' >
+      </ScrollShadow>
+        {typing && (
+          <div className='flex gap-2 items-center pl-2'>
+             <TypingIndicator />
+          </div>
+          )}
+      <CardFooter className='h-20   bg-stone-950  w-full ' >
           <MessageInputContainer message={message}
         onMessageChange={handleInputChange}
-        onMessageSubmit={handleMessageSubmit} />
+        onMessageSubmit={handleMessageSubmit} istyping={typing} />
       </CardFooter>
     </Card>
   )
